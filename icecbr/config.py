@@ -39,6 +39,7 @@ class ExperimentConfig:
     smoke_results_dir: Path = DEFAULT_OUTPUT_DIR / "smoke"
 
     era5_normalized_dir: Path = data_dir / "ERA5" / "normalized"
+    era5_normalized_abs_dir: Path = data_dir / "ERA5" / "normalized_abs"
     oras5_normalized_dir: Path = data_dir / "ORAS5" / "normalized"
 
     start_year: int = 1979
@@ -176,12 +177,25 @@ class ExperimentConfig:
     smoke_lead_times: Sequence[int] = (1, 3)
 
     background_variables: Sequence[str] = (
-        "normalized_psl_1979-01_2023-12_anomaly.npy",
+        # ERA5 anomaly fields
         "normalized_tas_1979-01_2023-12_anomaly.npy",
+        "normalized_ta500_1979-01_2023-12_anomaly.npy",
         "normalized_tos_1979-01_2023-12_anomaly.npy",
+        "normalized_rsds_1979-01_2023-12_anomaly.npy",
+        "normalized_rsus_1979-01_2023-12_anomaly.npy",
+        "normalized_psl_1979-01_2023-12_anomaly.npy",
         "normalized_zg500_1979-01_2023-12_anomaly.npy",
-        "normalized_ohc300_1979-01_2023-12_anomaly.npy",
+        "normalized_zg250_1979-01_2023-12_anomaly.npy",
+
+        # ERA5 absolute-normalized wind fields
+        "normalized_ua10_1979-01_2023-12.npy",
+        "normalized_uas_1979-01_2023-12.npy",
+        "normalized_vas_1979-01_2023-12.npy",
+
+        # ORAS5 anomaly fields
+        "normalized_ohc700_1979-01_2023-12_anomaly.npy",
         "normalized_mld001_1979-01_2023-12_anomaly.npy",
+        "normalized_mld003_1979-01_2023-12_anomaly.npy",
     )
 
     def ensure_dirs(self) -> None:
