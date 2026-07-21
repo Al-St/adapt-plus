@@ -189,12 +189,20 @@ def load_region_info(config: ExperimentConfig) -> RegionInfo:
 
 def load_background_fields(config: ExperimentConfig) -> dict[str, np.ndarray]:
     fields: dict[str, np.ndarray] = {}
+
     for name in config.background_variables:
-        if name.startswith("normalized_ohc") or name.startswith("normalized_mld"):
+        if name.startswith(("normalized_ohc", "normalized_mld")):
             path = config.oras5_normalized_dir / name
-        else:
+        elif name.endswith("_anomaly.npy"):
             path = config.era5_normalized_dir / name
+        else:
+            path = config.era5_normalized_abs_dir / name
+
+        if not path.exists():
+            raise FileNotFoundError(f"Missing background variable: {path}")
+
         fields[name] = hwt_to_thw(np.load(path))
+
     return fields
 
 
